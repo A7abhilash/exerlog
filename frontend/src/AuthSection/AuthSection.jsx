@@ -1,22 +1,17 @@
 import React from "react";
 import Navbar from "../containers/Navbar";
 import { useAuth } from "../contexts/AuthContext";
-import Profile from "./profile/Profile";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./routes/Routes";
 
 function AuthSection() {
   const { user } = useAuth();
 
   return (
-    <div className="container-fluid">
+    <Router>
       <Navbar />
-      <div className="row">
-        <div className="col-md-3 mx-2 mx-auto my-2 card p-0"></div>
-        <div className="col-md-3 mx-2 mx-auto my-2"></div>
-        <div className="col-md-3 mx-2 mx-auto my-2 card p-0 text-center">
-          <Profile />
-        </div>
-      </div>
-    </div>
+      <Routes />
+    </Router>
   );
 }
 
