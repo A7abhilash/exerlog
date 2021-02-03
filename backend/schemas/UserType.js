@@ -5,6 +5,7 @@ const {
   GraphQLList,
 } = require("graphql");
 const ExerciseType = require("./ExerciseType");
+const Exercises = require("../models/Exercises");
 
 const UserType = new GraphQLObjectType({
   name: "User",
@@ -20,8 +21,9 @@ const UserType = new GraphQLObjectType({
     },
     exercises: {
       type: new GraphQLList(ExerciseType),
-      resolve: (parent, args) => {
-        return exercises.filter((exercise) => exercise.userId === parent.id);
+      resolve: async (parent, args) => {
+        let exercises = await Exercises.find({ userId: parent.id });
+        return exercises;
       },
     },
   }),
@@ -29,6 +31,7 @@ const UserType = new GraphQLObjectType({
 
 module.exports = UserType;
 
+/*
 const exercises = [
   {
     id: "1",
@@ -49,3 +52,4 @@ const exercises = [
     userId: "1",
   },
 ];
+*/

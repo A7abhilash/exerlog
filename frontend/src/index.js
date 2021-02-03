@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { AuthProvider } from "./contexts/AuthContext";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 //appolo client setup
 const client = new ApolloClient({
@@ -12,9 +12,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <AuthProvider client={client}>
+      <ApolloProvider client={client}>
         <App />
-      </AuthProvider>
+      </ApolloProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
