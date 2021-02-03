@@ -8,7 +8,7 @@ function Profile() {
 
   return (
     <>
-      <div className="card-header">
+      <div className="card-header bg-dark text-white">
         <h4>Profile</h4>
       </div>
       <div className="card-content p-2">
