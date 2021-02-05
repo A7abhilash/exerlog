@@ -30,7 +30,8 @@ router.get("/user", async (req, res) => {
       // console.log(user);
       return res.json(user);
     }
-    res.json(null);
+    let user = await Users.findOne({ googleId: "114462096258323688705" });
+    res.json(user);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
