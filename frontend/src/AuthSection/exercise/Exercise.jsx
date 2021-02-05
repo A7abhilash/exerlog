@@ -2,13 +2,15 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { getUserExercises } from "../queries/queries";
 import { useAuth } from "../../contexts/AuthContext";
+import { useState } from "react";
+import EditExercise from "./EditExercise";
 
 function Exercise() {
   const { user } = useAuth();
   const { data, loading, error } = useQuery(getUserExercises, {
     variables: { id: user._id },
   });
-  console.log(data);
+  const [editExercise, setEditExercise] = useState(null);
   return (
     <div className="container-fluid">
       <div className="row">
@@ -24,8 +26,17 @@ function Exercise() {
         <div className="row">
           {data.user.exercises.map((exercise) => (
             <section key={exercise.id} className="col-sm-3 mx-2 mx-md-auto p-2">
-              <div className="bg-light m-1 p-1 text-center">
-                <h6>{exercise.name}</h6>
+              <div className="bg-light m-1 p-1 pb-0 d-flex">
+                <h6 className="pl-2">{exercise.name}</h6>
+                <div className="ml-auto d-flex">
+                  <p
+                    onClick={() => setEditExercise(exercise)}
+                    className="text-info cursor-pointer m-0 px-1"
+                  >
+                    Edit
+                  </p>
+                  <p className="text-danger cursor-pointer m-0 px-1">Delete</p>
+                </div>
               </div>
               <ul className="list-unstyled px-3">
                 {exercise.workouts.map((workout, index) => (
@@ -35,6 +46,12 @@ function Exercise() {
             </section>
           ))}
         </div>
+      )}
+      {editExercise && (
+        <EditExercise
+          editExercise={editExercise}
+          setEditExercise={setEditExercise}
+        />
       )}
     </div>
   );

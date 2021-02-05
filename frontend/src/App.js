@@ -4,6 +4,8 @@ import AuthSection from "./AuthSection/AuthSection";
 import { useAuth } from "./contexts/AuthContext";
 import Loader from "./containers/Loader";
 
+import "./App.css";
+
 function App() {
   const { user, loading } = useAuth();
 
