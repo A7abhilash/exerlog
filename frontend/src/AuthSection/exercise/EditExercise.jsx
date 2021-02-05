@@ -19,6 +19,10 @@ function EditExercise({ editExercise, setEditExercise }) {
     setEditWorkout(workout);
   };
 
+  const deleteThisWorkout = (workout) => {
+    setExerciseWorkouts(exerciseWorkouts.filter((w) => w !== workout));
+  };
+
   const addNewWorkout = (event) => {
     setExerciseWorkouts([...exerciseWorkouts, editWorkout]);
     setEditWorkout("");
@@ -75,7 +79,12 @@ function EditExercise({ editExercise, setEditExercise }) {
                   >
                     Edit
                   </p>
-                  <p className="text-danger cursor-pointer m-0 px-1">Delete</p>
+                  <p
+                    onClick={() => deleteThisWorkout(workout)}
+                    className="text-danger cursor-pointer m-0 px-1"
+                  >
+                    Delete
+                  </p>
                 </div>
               </div>
             ))
