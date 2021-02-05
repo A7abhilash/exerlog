@@ -10,8 +10,8 @@ function Navbar() {
       to: "/newLog",
     },
     {
-      name: "Add New Exercise/Workout",
-      to: "/newExercise",
+      name: "My Exercises",
+      to: "/myExercises",
     },
   ];
   return (

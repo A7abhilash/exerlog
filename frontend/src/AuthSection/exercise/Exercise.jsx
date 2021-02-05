@@ -1,9 +1,9 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { getUserExercises } from "../queries/queries";
-import { useAuth } from "./../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
-function NewExercise() {
+function Exercise() {
   const { user } = useAuth();
   const { data, loading, error } = useQuery(getUserExercises, {
     variables: { id: user._id },
@@ -40,4 +40,4 @@ function NewExercise() {
   );
 }
 
-export default NewExercise;
+export default Exercise;
