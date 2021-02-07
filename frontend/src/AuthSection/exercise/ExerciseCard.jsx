@@ -15,6 +15,9 @@ function ExerciseCard({ exercise, setEditExercise }) {
           { query: getUserExercises, variables: { id: user._id } },
         ],
       });
+      if (res.data.deleteExercise.id === id) {
+        alert("Exercise deleted successfully");
+      }
     }
   };
 
