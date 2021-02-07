@@ -89,7 +89,7 @@ function EditExercise({ editExercise, setEditExercise }) {
               </div>
             ))
           ) : (
-            <p className="text-center text-muted">
+            <p className="text-center text-muted pt-2">
               <small>No workouts in this list...</small>
             </p>
           )}
