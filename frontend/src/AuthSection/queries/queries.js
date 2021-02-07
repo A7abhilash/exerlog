@@ -11,3 +11,19 @@ export const getUserExercises = gql`
     }
   }
 `;
+
+export const updateExerciseMutation = gql`
+  mutation($id: ID!, $name: String!, $workouts: List!) {
+    updateExercise(id: $id, name: $name, workouts: $workouts) {
+      name
+    }
+  }
+`;
+
+export const deleteExerciseMutation = gql`
+  mutation($id: ID!) {
+    deleteExercise(id: $id) {
+      id
+    }
+  }
+`;

@@ -33,13 +33,13 @@ const RootMutationType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
         name: { type: GraphQLNonNull(GraphQLString) },
-        userId: { type: GraphQLNonNull(GraphQLID) },
         workouts: { type: GraphQLList(GraphQLString) },
       },
       resolve: async (parent, args) => {
+        console.log(args);
         let exercise = {
+          id: args.id,
           name: args.name,
-          userId: args.userId,
           workouts: args.workouts,
         };
         await Exercises.findByIdAndUpdate(args.id, exercise);

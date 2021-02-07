@@ -25,22 +25,40 @@ function Exercise() {
       )}
       {data && (
         <div className="row align-items-start">
-          {data.user.exercises.map((exercise) => (
-            <section key={exercise.id} className="col-sm-3 mx-2 mx-md-auto p-2">
-              <ExerciseCard
-                exercise={exercise}
-                setEditExercise={setEditExercise}
-              />
-            </section>
-          ))}
-          {data.user.exercises.map((exercise) => (
-            <section key={exercise.id} className="col-sm-3 mx-2 mx-md-auto p-2">
-              <ExerciseCard
-                exercise={exercise}
-                setEditExercise={setEditExercise}
-              />
-            </section>
-          ))}
+          {data.user.exercises.length ? (
+            data.user.exercises.map((exercise) => (
+              <section
+                key={exercise.id}
+                className="col-sm-3 mx-2 mx-md-auto p-2"
+              >
+                <ExerciseCard
+                  exercise={exercise}
+                  setEditExercise={setEditExercise}
+                />
+              </section>
+            ))
+          ) : (
+            <p className="col-12 text-center text-muted pt-2">
+              No exercises found in this list...
+            </p>
+          )}
+          {data.user.exercises.length ? (
+            data.user.exercises.map((exercise) => (
+              <section
+                key={exercise.id}
+                className="col-sm-3 mx-2 mx-md-auto p-2"
+              >
+                <ExerciseCard
+                  exercise={exercise}
+                  setEditExercise={setEditExercise}
+                />
+              </section>
+            ))
+          ) : (
+            <p className="col-12 text-center text-muted pt-2">
+              No exercises found in this list...
+            </p>
+          )}
         </div>
       )}
       {editExercise && (

@@ -1,18 +1,20 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
+import { updateExerciseMutation } from "../queries/queries";
 
 function EditExercise({ editExercise, setEditExercise }) {
   const [exerciseName, setExerciseName] = useState("");
   const [exerciseWorkouts, setExerciseWorkouts] = useState(null);
   const [editWorkout, setEditWorkout] = useState("");
+  const [updateExercise] = useMutation(updateExerciseMutation);
+
   useEffect(() => {
     if (editExercise) {
       console.log(editExercise);
       setExerciseName(editExercise.name);
       setExerciseWorkouts(editExercise.workouts);
     }
-  }, []);
+  }, [editExercise]);
 
   const editThisWorkout = (workout) => {
     setExerciseWorkouts(exerciseWorkouts.filter((w) => w !== workout));
@@ -28,9 +30,17 @@ function EditExercise({ editExercise, setEditExercise }) {
     setEditWorkout("");
   };
 
-  const handleSaveExercise = () => {
-    let exercise = { name: exerciseName, workouts: exerciseWorkouts };
-    console.log(exercise);
+  const handleSaveExercise = async () => {
+    let exercise = {
+      id: editExercise.id,
+      name: exerciseName,
+      workouts: exerciseWorkouts,
+    };
+    // console.log(exercise);
+    const res = await updateExercise({
+      variables: exercise,
+    });
+    console.log(res);
   };
 
   return (
