@@ -28,7 +28,6 @@ function ExerciseCard({ exercise, setEditExercise }) {
         <div className="ml-auto d-flex">
           <p
             onClick={() => setEditExercise(exercise)}
-            onClick={() => setEditExercise(exercise)}
             className="text-info cursor-pointer m-0 px-1"
           >
             Edit
