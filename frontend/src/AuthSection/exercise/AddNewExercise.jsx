@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { addNewExerciseMutation, getUserExercises } from "../queries/queries";
 
-function AddNew() {
+function AddNewExercise() {
   const { user } = useAuth();
   const newExerciseNameRef = useRef("");
   const [addNewExercise] = useMutation(addNewExerciseMutation);
@@ -47,4 +47,4 @@ function AddNew() {
   );
 }
 
-export default AddNew;
+export default AddNewExercise;

@@ -1,16 +1,20 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import AddNewLog from "./AddNewLog";
 import SidebarItems from "./SidebarItems";
 
 function AllLogs() {
   const [list, setList] = useState(["Sat Feb 06 2021", "Sun Feb 07 2021"]);
   const [selectedLog, setSelectedLog] = useState("");
 
-  const addNewLog = (event) => {
-    event.preventDefault();
-    const today = new Date().toDateString();
-    setList([today, ...list]);
+  const addNewLog = (date) => {
+    if (!list.includes(date)) {
+      setList([date, ...list]);
+      setSelectedLog(date);
+    } else {
+      alert("Log for the specified day exists");
+    }
   };
 
   useEffect(() => {
@@ -24,13 +28,7 @@ function AllLogs() {
         <h4>All Logs</h4>
       </div>
       <div className="card-body p-2">
-        <button
-          onClick={addNewLog}
-          className="btn btn-primary btn-sm btn-block mb-2"
-          disabled={list.includes(new Date().toDateString())}
-        >
-          Add New Log For the Day
-        </button>
+        <AddNewLog addNewLog={addNewLog} />
         {list.length ? (
           <SidebarItems
             list={list}

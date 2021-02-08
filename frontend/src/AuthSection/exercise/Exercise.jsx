@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import EditExercise from "./EditExercise";
 import ExerciseCard from "./ExerciseCard";
-import AddNew from "./AddNew";
+import AddNewExercise from "./AddNewExercise";
 
 function Exercise() {
   const { user } = useAuth();
@@ -20,7 +20,7 @@ function Exercise() {
           <h3 className="text-center">Your Exercises & Workouts</h3>
         </div>
         <div className="col-md-4 mx-auto p-2">
-          <AddNew />
+          <AddNewExercise />
         </div>
       </div>
       {loading && <h4 className="text-center text-info">Loading data...</h4>}

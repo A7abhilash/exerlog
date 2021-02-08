@@ -6,7 +6,7 @@ function SidebarItems({ list, selectedLog, setSelectedLog }) {
       {list.map((item) =>
         item === selectedLog ? (
           <li key={item} className="list-group-item bg-light">
-            {item}
+            <strong>{item}</strong>
           </li>
         ) : (
           <li
