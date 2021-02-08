@@ -4,9 +4,8 @@ import { useState } from "react";
 import AddNewLog from "./AddNewLog";
 import SidebarItems from "./SidebarItems";
 
-function AllLogs() {
+function AllLogs({ selectedLog, setSelectedLog }) {
   const [list, setList] = useState(["Sat Feb 06 2021", "Sun Feb 07 2021"]);
-  const [selectedLog, setSelectedLog] = useState("");
 
   const addNewLog = (date) => {
     if (!list.includes(date)) {
@@ -18,9 +17,10 @@ function AllLogs() {
   };
 
   useEffect(() => {
+    setSelectedLog(list[0]);
     // console.log(list);
-    console.log(selectedLog);
-  }, [selectedLog]);
+    // console.log(selectedLog);
+  }, []);
 
   return (
     <>
