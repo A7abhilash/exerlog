@@ -21,7 +21,9 @@ function AddNew() {
       ],
     });
     if (res) {
-      alert("New exercise added successfully!!!");
+      alert(
+        `New exercise: ${res.data.addNewExercise.name} added successfully!!!`
+      );
     }
   };
 

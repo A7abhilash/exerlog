@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { updateExerciseMutation } from "../queries/queries";
+import { getUserExercises, updateExerciseMutation } from "../queries/queries";
+import { useAuth } from "../../contexts/AuthContext";
 
 function EditExercise({ editExercise, setEditExercise }) {
+  const { user } = useAuth();
   const [exerciseName, setExerciseName] = useState("");
   const [exerciseWorkouts, setExerciseWorkouts] = useState(null);
   const [editWorkout, setEditWorkout] = useState("");
@@ -10,7 +12,7 @@ function EditExercise({ editExercise, setEditExercise }) {
 
   useEffect(() => {
     if (editExercise) {
-      console.log(editExercise);
+      // console.log(editExercise);
       setExerciseName(editExercise.name);
       setExerciseWorkouts(editExercise.workouts);
     }
@@ -36,11 +38,16 @@ function EditExercise({ editExercise, setEditExercise }) {
       name: exerciseName,
       workouts: exerciseWorkouts,
     };
-    // console.log(exercise);
+    console.log(exercise);
     const res = await updateExercise({
       variables: exercise,
+      refetchQueries: [
+        { query: getUserExercises, variables: { id: user._id } },
+      ],
     });
-    console.log(res);
+    if (res) {
+      setEditExercise(null);
+    }
   };
 
   return (
@@ -60,7 +67,7 @@ function EditExercise({ editExercise, setEditExercise }) {
             type="text"
             className="form-control"
             value={exerciseName}
-            onChange={(e) => setExerciseName({ name: e.target.value })}
+            onChange={(e) => setExerciseName(e.target.value)}
           />
           <hr />
           <div className="d-flex">
