@@ -6,10 +6,6 @@ function Navbar() {
   const { user } = useAuth();
   const addNew = [
     {
-      name: "Add New Log for the Day",
-      to: "/newLog",
-    },
-    {
       name: "My Exercises",
       to: "/myExercises",
     },
