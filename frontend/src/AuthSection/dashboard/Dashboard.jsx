@@ -1,6 +1,4 @@
 import React from "react";
-import AllLogs from "../logs/AllLogs";
-import LogForTheDay from "../logs/LogForTheDay";
 import Logs from "../logs/Logs";
 import Profile from "../profile/Profile";
 
