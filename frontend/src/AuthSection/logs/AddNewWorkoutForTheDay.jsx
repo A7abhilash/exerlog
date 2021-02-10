@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { useAuth } from "../../contexts/AuthContext";
 import { getUserExercises } from "../queries/queries";
 import SelectCard from "./SelectCard";
+import { useEffect } from "react";
 
 function AddNewWorkoutForTheDay({ addNewWorkoutForTheDay }) {
   const { user } = useAuth();
@@ -14,10 +15,15 @@ function AddNewWorkoutForTheDay({ addNewWorkoutForTheDay }) {
   const [exercise, setExercise] = useState("");
   const [workout, setWorkout] = useState("");
 
+  useEffect(() => {
+    setWorkout("");
+  }, [exercise]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(exercise);
-    console.log(workout);
+    addNewWorkoutForTheDay({ exercise, workout });
+    setExercise("");
+    setWorkout("");
   };
 
   return (
@@ -32,8 +38,8 @@ function AddNewWorkoutForTheDay({ addNewWorkoutForTheDay }) {
       )}
       {data &&
         (data.user.exercises.length ? (
-          <div className="my-2">
-            <div>
+          <div className="my-4">
+            <div className="my-2">
               <p>Select an Exercise</p>
               {data.user.exercises.map((item) => (
                 <SelectCard
@@ -43,29 +49,35 @@ function AddNewWorkoutForTheDay({ addNewWorkoutForTheDay }) {
                   handleSelect={setExercise}
                 />
               ))}
-              <hr />
             </div>
             {exercise && (
-              <div>
+              <div className="my-2">
                 <p>Select a Workout</p>
-                {data.user.exercises
-                  .find((item) => item.name === exercise)
-                  .workouts.map((item, index) => (
-                    <SelectCard
-                      key={item + index}
-                      isSelected={item === workout}
-                      name={item}
-                      handleSelect={setWorkout}
-                    />
-                  ))}
-                <hr />
+                {data.user.exercises.find((item) => item.name === exercise)
+                  .workouts.length ? (
+                  data.user.exercises
+                    .find((item) => item.name === exercise)
+                    .workouts.map((item, index) => (
+                      <SelectCard
+                        key={item + index}
+                        isSelected={item === workout}
+                        name={item}
+                        handleSelect={setWorkout}
+                      />
+                    ))
+                ) : (
+                  <p className="text-muted">
+                    <small>No workouts found in this exercise...</small>
+                  </p>
+                )}
               </div>
             )}
-            <div>
+            <div className="my-3">
               <button
                 onClick={handleSubmit}
                 type="submit"
-                className="btn btn-sm btn-dark"
+                className="btn btn-sm btn-primary"
+                disabled={exercise === "" || workout === ""}
               >
                 Add Workout
               </button>

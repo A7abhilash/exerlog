@@ -3,9 +3,16 @@ import { useQuery } from "@apollo/client";
 import { useAuth } from "../../contexts/AuthContext";
 import WorkoutsForTheDay from "./WorkoutsForTheDay";
 import AddNewWorkoutForTheDay from "./AddNewWorkoutForTheDay";
+import { useState } from "react";
 
 function LogForTheDay({ selectedLog }) {
   const { user } = useAuth();
+  const [allLogs, setAllLogs] = useState([]);
+
+  const addNewWorkoutForTheDay = (newLog) => {
+    console.log({ ...newLog, selectedLog });
+    setAllLogs([...allLogs, newLog]);
+  };
 
   return (
     <>
@@ -16,8 +23,8 @@ function LogForTheDay({ selectedLog }) {
           <h6 className="text-success cursor-pointer m-0 px-1">Save</h6>
         </div>
       </div>
-      <AddNewWorkoutForTheDay />
-      <WorkoutsForTheDay />
+      <AddNewWorkoutForTheDay addNewWorkoutForTheDay={addNewWorkoutForTheDay} />
+      <WorkoutsForTheDay logs={allLogs} />
     </>
   );
 }
