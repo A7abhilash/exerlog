@@ -13,9 +13,13 @@ function AddNewWorkoutForTheDay({ addNewWorkoutForTheDay }) {
   });
 
   const [exercise, setExercise] = useState("");
+  const [selectedExercise, setSelectedExercise] = useState(null);
   const [workout, setWorkout] = useState("");
 
   useEffect(() => {
+    setSelectedExercise(
+      data?.user.exercises.find((item) => item.name === exercise)
+    );
     setWorkout("");
   }, [exercise]);
 
@@ -53,11 +57,9 @@ function AddNewWorkoutForTheDay({ addNewWorkoutForTheDay }) {
             {exercise && (
               <div className="my-2">
                 <p>Select a Workout</p>
-                {data.user.exercises.find((item) => item.name === exercise)
-                  .workouts.length ? (
-                  data.user.exercises
-                    .find((item) => item.name === exercise)
-                    .workouts.map((item, index) => (
+                {selectedExercise &&
+                  (selectedExercise.workouts.length ? (
+                    selectedExercise.workouts.map((item, index) => (
                       <SelectCard
                         key={item + index}
                         isSelected={item === workout}
@@ -65,11 +67,11 @@ function AddNewWorkoutForTheDay({ addNewWorkoutForTheDay }) {
                         handleSelect={setWorkout}
                       />
                     ))
-                ) : (
-                  <p className="text-muted">
-                    <small>No workouts found in this exercise...</small>
-                  </p>
-                )}
+                  ) : (
+                    <p className="text-muted">
+                      <small>No workouts found in this exercise...</small>
+                    </p>
+                  ))}
               </div>
             )}
             <div className="my-3">
