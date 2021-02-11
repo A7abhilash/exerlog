@@ -30,26 +30,3 @@ const UserType = new GraphQLObjectType({
 });
 
 module.exports = UserType;
-
-/*
-const exercises = [
-  {
-    id: "1",
-    name: "Day-1",
-    list: ["Exercise-1", "Exercise-2", "Exercise-3"],
-    userId: "1",
-  },
-  {
-    id: "2",
-    name: "Day-2",
-    list: ["Exercise-1", "Exercise-2"],
-    userId: "2",
-  },
-  {
-    id: "3",
-    name: "Day-3",
-    list: ["Exercise-3"],
-    userId: "1",
-  },
-];
-*/

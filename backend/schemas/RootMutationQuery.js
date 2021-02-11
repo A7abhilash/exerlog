@@ -4,10 +4,14 @@ const {
   GraphQLString,
   GraphQLList,
   GraphQLNonNull,
+  GraphQLSchema,
 } = require("graphql");
 const Exercises = require("../models/Exercises");
+const Logs = require("../models/Logs");
 const Users = require("../models/Users");
+const EachLogType = require("./EachLog");
 const ExerciseType = require("./ExerciseType");
+const LogType = require("./LogType");
 const UserType = require("./UserType");
 
 const RootMutationType = new GraphQLObjectType({
@@ -56,28 +60,48 @@ const RootMutationType = new GraphQLObjectType({
         return { id: args.id };
       },
     },
+    addNewLog: {
+      type: LogType,
+      args: {
+        date: { type: GraphQLNonNull(GraphQLString) },
+        userId: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve: async (parent, args) => {
+        const { date, userId } = args;
+        let log = await Logs({
+          date,
+          userId,
+          logs: [],
+        });
+        return await log.save();
+      },
+    },
+    updateLog: {
+      type: LogType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        logs: {
+          type: GraphQLList(EachLogType),
+        },
+      },
+      resolve: async (parent, args) => {
+        const { id, logs } = args;
+        let log = await Logs.findById(id);
+        log.logs = logs;
+        return await log.updateOne();
+      },
+    },
+    deleteLog: {
+      type: LogType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve: async (parent, args) => {
+        await Logs.findByIdAndDelete(args.id);
+        return { id: args.id };
+      },
+    },
   }),
 });
 
 module.exports = RootMutationType;
-
-const exercises = [
-  {
-    id: "1",
-    name: "Day-1",
-    list: ["Exercise-1", "Exercise-2", "Exercise-3"],
-    userId: "1",
-  },
-  {
-    id: "2",
-    name: "Day-2",
-    list: ["Exercise-1", "Exercise-2"],
-    userId: "2",
-  },
-  {
-    id: "3",
-    name: "Day-3",
-    list: ["Exercise-3"],
-    userId: "1",
-  },
-];

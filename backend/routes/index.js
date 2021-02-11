@@ -31,7 +31,7 @@ router.get("/user", async (req, res) => {
       return res.json(user);
     }
     let user = await Users.findOne({ googleId: "114462096258323688705" });
-    res.json(user);
+    res.json(null);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
