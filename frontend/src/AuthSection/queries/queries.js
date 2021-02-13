@@ -60,6 +60,14 @@ export const addNewLogMutation = gql`
   }
 `;
 
+export const updateLogMutation = gql`
+  mutation($id: ID!, $logs: [EachLogInput]) {
+    updateLog(input: { id: $id, logs: $logs }) {
+      logs
+    }
+  }
+`;
+
 export const deleteLogMutation = gql`
   mutation($id: ID!) {
     deleteLog(input: { id: $id }) {

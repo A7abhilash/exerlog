@@ -4,15 +4,24 @@ import { useAuth } from "../../contexts/AuthContext";
 import WorkoutsForTheDay from "./WorkoutsForTheDay";
 import AddNewWorkoutForTheDay from "./AddNewWorkoutForTheDay";
 import { useState } from "react";
-import { deleteLogMutation, getUserLogsQuery } from "../queries/queries";
+import {
+  deleteLogMutation,
+  getUserLogsQuery,
+  updateLogMutation,
+} from "../queries/queries";
+import { useEffect } from "react";
 
 function LogForTheDay({ selectedLog }) {
   const { user } = useAuth();
-  const [allLogs, setAllLogs] = useState([]);
+  const [allLogs, setAllLogs] = useState(null);
+  const [updateLog] = useMutation(updateLogMutation);
   const [deleteLog] = useMutation(deleteLogMutation);
 
+  useEffect(() => {
+    setAllLogs(selectedLog.logs);
+  }, [selectedLog]);
+
   const addNewWorkoutForTheDay = (newLog) => {
-    console.log({ ...newLog, selectedLog });
     setAllLogs([...allLogs, newLog]);
   };
 
@@ -37,6 +46,19 @@ function LogForTheDay({ selectedLog }) {
   const saveLog = async () => {
     console.log("Save Log");
     console.log(allLogs);
+    let log = {
+      id: selectedLog.id,
+      logs: allLogs,
+    };
+    let res = await updateLog({
+      variables: log,
+      refetchQueries: [
+        { query: getUserLogsQuery, variables: { id: user._id } },
+      ],
+    });
+    if (res.data.deleteLog.id === selectedLog.id) {
+      alert("Log saved successfully");
+    }
   };
   return (
     <>
@@ -58,7 +80,9 @@ function LogForTheDay({ selectedLog }) {
         </div>
       </div>
       <AddNewWorkoutForTheDay addNewWorkoutForTheDay={addNewWorkoutForTheDay} />
-      <WorkoutsForTheDay logs={allLogs} deleteOneLog={deleteOneLog} />
+      {allLogs && (
+        <WorkoutsForTheDay logs={allLogs} deleteOneLog={deleteOneLog} />
+      )}
     </>
   );
 }

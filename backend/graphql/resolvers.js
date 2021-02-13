@@ -57,6 +57,13 @@ const resolvers = {
     });
     return await log.save();
   },
+  updateLog: async (parent, args) => {
+    let log = {
+      logs: parent.input.logs,
+    };
+    await Logs.findByIdAndUpdate(parent.input.id, log);
+    return log;
+  },
   deleteLog: async (parent, args) => {
     await Logs.findByIdAndDelete(parent.input.id);
     return { id: parent.input.id };
