@@ -1,6 +1,6 @@
 import React from "react";
 
-function WorkoutsForTheDay({ logs }) {
+function WorkoutsForTheDay({ logs, deleteOneLog }) {
   return (
     <div>
       <hr />
@@ -23,7 +23,10 @@ function WorkoutsForTheDay({ logs }) {
                   <td>{item.exercise}</td>
                   <td>{item.workout}</td>
                   <td>
-                    <p className="text-danger cursor-pointer m-0 px-1">
+                    <p
+                      onClick={() => deleteOneLog(item.id)}
+                      className="text-danger cursor-pointer m-0 px-1"
+                    >
                       Delete
                     </p>
                   </td>

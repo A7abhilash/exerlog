@@ -59,3 +59,11 @@ export const addNewLogMutation = gql`
     }
   }
 `;
+
+export const deleteLogMutation = gql`
+  mutation($id: ID!) {
+    deleteLog(input: { id: $id }) {
+      id
+    }
+  }
+`;

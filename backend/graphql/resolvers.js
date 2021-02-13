@@ -57,6 +57,10 @@ const resolvers = {
     });
     return await log.save();
   },
+  deleteLog: async (parent, args) => {
+    await Logs.findByIdAndDelete(parent.input.id);
+    return { id: parent.input.id };
+  },
 };
 
 module.exports = resolvers;
