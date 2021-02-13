@@ -14,15 +14,15 @@ export const getUserExercises = gql`
 
 export const addNewExerciseMutation = gql`
   mutation($name: String!, $userId: ID!) {
-    addNewExercise(name: $name, userId: $userId) {
+    addNewExercise(input: { name: $name, userId: $userId }) {
       name
     }
   }
 `;
 
 export const updateExerciseMutation = gql`
-  mutation($id: ID!, $name: String!, $workouts: List!) {
-    updateExercise(id: $id, name: $name, workouts: $workouts) {
+  mutation($id: ID!, $name: String!, $workouts: [String]) {
+    updateExercise(input: { id: $id, name: $name, workouts: $workouts }) {
       name
     }
   }
@@ -30,7 +30,7 @@ export const updateExerciseMutation = gql`
 
 export const deleteExerciseMutation = gql`
   mutation($id: ID!) {
-    deleteExercise(id: $id) {
+    deleteExercise(input: { id: $id }) {
       id
     }
   }

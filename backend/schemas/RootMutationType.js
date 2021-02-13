@@ -5,6 +5,7 @@ const {
   GraphQLList,
   GraphQLNonNull,
   GraphQLSchema,
+  GraphQLInputObjectType,
 } = require("graphql");
 const Exercises = require("../models/Exercises");
 const Logs = require("../models/Logs");
@@ -81,7 +82,7 @@ const RootMutationType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
         logs: {
-          type: GraphQLList(EachLogType),
+          type: EachLogType,
         },
       },
       resolve: async (parent, args) => {

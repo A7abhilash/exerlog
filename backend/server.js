@@ -9,7 +9,9 @@ const mongoose = require("mongoose");
 const { GraphQLSchema } = require("graphql");
 const { graphqlHTTP } = require("express-graphql");
 const RootQueryType = require("./schemas/RootQueryType");
-const RootMutationType = require("./schemas/RootMutationQuery");
+const RootMutationType = require("./schemas/RootMutationType");
+const schema = require("./graphql/schema");
+const resolvers = require("./graphql/resolvers");
 
 const app = express();
 
@@ -21,10 +23,10 @@ connectDB();
 //passport
 require("./config/passport.js")(passport);
 //graphql
-const schema = new GraphQLSchema({
-  query: RootQueryType,
-  mutation: RootMutationType,
-});
+// const schema = new GraphQLSchema({
+//   query: RootQueryType,
+//   mutation: RootMutationType,
+// });
 
 //*****MIDDLEWARE
 //Body Parser
@@ -52,7 +54,10 @@ app.use(passport.session());
 //Routes
 app.use("/", require("./routes/index"));
 app.use("/auth", require("./routes/auth"));
-app.use("/graphiql", graphqlHTTP({ schema, graphiql: true }));
+app.use(
+  "/graphiql",
+  graphqlHTTP({ schema: schema, rootValue: resolvers, graphiql: true })
+);
 
 //*****PORT
 const PORT = process.env.PORT || 7781;
