@@ -55,6 +55,7 @@ export const addNewLogMutation = gql`
   mutation($date: String!, $userId: ID!) {
     addNewLog(input: { date: $date, userId: $userId }) {
       date
+      id
     }
   }
 `;
