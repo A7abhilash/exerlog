@@ -1,38 +1,6 @@
 const Exercises = require("../models/Exercises");
+const Logs = require("../models/Logs");
 const Users = require("../models/Users");
-
-const exercisesList = [
-  {
-    id: "1",
-    userId: "60163b2150e651376cd5d6a6",
-    name: "Legs",
-    workouts: ["Squats", "Lounges"],
-  },
-  {
-    id: "2",
-    userId: "2",
-    name: "Chest",
-    workouts: ["Bench Press"],
-  },
-  {
-    id: "3",
-    userId: "60163b2150e651376cd5d6a6",
-    name: "Biceps",
-    workouts: ["Curls", "Concentration curls"],
-  },
-];
-const usersList = [
-  {
-    id: "60163b2150e651376cd5d6a6",
-    name: "A7",
-    profileImg: "",
-  },
-  {
-    id: "2",
-    name: "M17",
-    profileImg: "",
-  },
-];
 
 const resolvers = {
   user: async (parent, args) => {
@@ -43,7 +11,8 @@ const resolvers = {
     // return { id, name, profileImg, exercises };
     let { _id, displayName, image } = await Users.findById(parent.id);
     let exercises = await Exercises.find({ userId: parent.id });
-    return { id: _id, name: displayName, profileImg: image, exercises };
+    let logs = await Logs.find({ userId: parent.id });
+    return { id: _id, name: displayName, profileImg: image, exercises, logs };
   },
   addNewExercise: async (parent, args) => {
     // let exercise = {
@@ -77,6 +46,48 @@ const resolvers = {
     await Exercises.findByIdAndDelete(parent.input.id);
     return { id: parent.input.id };
   },
+  addNewLog: async (parent, args) => {
+    console.log(parent.input);
+    let log = new Logs({
+      date: parent.input.date,
+      userId: parent.input.userId,
+      logs: [],
+    });
+    return await log.save();
+  },
 };
 
 module.exports = resolvers;
+
+const exercisesList = [
+  {
+    id: "1",
+    userId: "60163b2150e651376cd5d6a6",
+    name: "Legs",
+    workouts: ["Squats", "Lounges"],
+  },
+  {
+    id: "2",
+    userId: "2",
+    name: "Chest",
+    workouts: ["Bench Press"],
+  },
+  {
+    id: "3",
+    userId: "60163b2150e651376cd5d6a6",
+    name: "Biceps",
+    workouts: ["Curls", "Concentration curls"],
+  },
+];
+const usersList = [
+  {
+    id: "60163b2150e651376cd5d6a6",
+    name: "A7",
+    profileImg: "",
+  },
+  {
+    id: "2",
+    name: "M17",
+    profileImg: "",
+  },
+];

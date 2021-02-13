@@ -12,6 +12,21 @@ export const getUserExercises = gql`
   }
 `;
 
+export const getUserLogsQuery = gql`
+  query($id: ID!) {
+    user(id: $id) {
+      logs {
+        date
+        logs {
+          exercise
+          workout
+        }
+        id
+      }
+    }
+  }
+`;
+
 export const addNewExerciseMutation = gql`
   mutation($name: String!, $userId: ID!) {
     addNewExercise(input: { name: $name, userId: $userId }) {
@@ -32,6 +47,14 @@ export const deleteExerciseMutation = gql`
   mutation($id: ID!) {
     deleteExercise(input: { id: $id }) {
       id
+    }
+  }
+`;
+
+export const addNewLogMutation = gql`
+  mutation($date: String!, $userId: ID!) {
+    addNewLog(input: { date: $date, userId: $userId }) {
+      date
     }
   }
 `;

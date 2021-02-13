@@ -4,17 +4,17 @@ function SidebarItems({ list, selectedLog, setSelectedLog }) {
   return (
     <ul className="list-group">
       {list.map((item) =>
-        item === selectedLog ? (
-          <li key={item} className="list-group-item bg-light">
-            <strong>{item}</strong>
+        item.date === selectedLog.date ? (
+          <li key={item.id} className="list-group-item bg-light">
+            <strong>{item.date}</strong>
           </li>
         ) : (
           <li
-            key={item}
+            key={item.id}
             onClick={() => setSelectedLog(item)}
             className="list-group-item cursor-pointer"
           >
-            {item}
+            {item.date}
           </li>
         )
       )}
