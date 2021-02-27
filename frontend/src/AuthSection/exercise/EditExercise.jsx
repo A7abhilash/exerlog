@@ -13,21 +13,21 @@ function EditExercise({ editExercise, setEditExercise }) {
   useEffect(() => {
     if (editExercise) {
       // console.log(editExercise);
-      setExerciseName(editExercise.name);
-      setExerciseWorkouts(editExercise.workouts);
+      setExerciseName(editExercise?.name);
+      setExerciseWorkouts(editExercise?.workouts);
     }
   }, [editExercise]);
 
-  const editThisWorkout = (workout) => {
-    setExerciseWorkouts(exerciseWorkouts.filter((w) => w !== workout));
+  const editThisWorkout = (workout, index) => {
+    setExerciseWorkouts(exerciseWorkouts.filter((_, i) => i !== index));
     setEditWorkout(workout);
   };
 
-  const deleteThisWorkout = (workout) => {
-    setExerciseWorkouts(exerciseWorkouts.filter((w) => w !== workout));
+  const deleteThisWorkout = (index) => {
+    setExerciseWorkouts(exerciseWorkouts.filter((_, i) => i !== index));
   };
 
-  const addNewWorkout = (event) => {
+  const addNewWorkout = () => {
     setExerciseWorkouts([...exerciseWorkouts, editWorkout]);
     setEditWorkout("");
   };
@@ -38,7 +38,7 @@ function EditExercise({ editExercise, setEditExercise }) {
       name: exerciseName,
       workouts: exerciseWorkouts,
     };
-    console.log(exercise);
+    // console.log(exercise);
     const res = await updateExercise({
       variables: exercise,
       refetchQueries: [
@@ -91,13 +91,13 @@ function EditExercise({ editExercise, setEditExercise }) {
                 <h6 className="pl-2">{workout}</h6>
                 <div className="ml-auto d-flex">
                   <p
-                    onClick={() => editThisWorkout(workout)}
+                    onClick={() => editThisWorkout(workout, index)}
                     className="text-info cursor-pointer m-0 px-1"
                   >
                     Edit
                   </p>
                   <p
-                    onClick={() => deleteThisWorkout(workout)}
+                    onClick={() => deleteThisWorkout(index)}
                     className="text-danger cursor-pointer m-0 px-1"
                   >
                     Delete

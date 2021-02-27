@@ -55,7 +55,7 @@ const schema = buildSchema(`
         addNewExercise(input: ExerciseInput): ExerciseType
         updateExercise(input: ExerciseInput): ExerciseType
         deleteExercise(input: ExerciseInput): ExerciseType
-        addNewLog(input:LogInput): LogType
+        addNewLog(input: LogInput): LogType
         updateLog(input: LogInput): LogType
         deleteLog(input: LogInput): LogType
     }

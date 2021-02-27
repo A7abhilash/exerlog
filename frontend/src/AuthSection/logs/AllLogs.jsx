@@ -16,9 +16,11 @@ function AllLogs({ selectedLog, setSelectedLog }) {
   const [addNewLog] = useMutation(addNewLogMutation);
 
   const newLog = async (date) => {
+    if (new Date(date).getTime().toString() > new Date().getTime().toString()) {
+      alert("Selected date is not before today!!!");
+      return;
+    }
     if (!list.find((item) => item.date === date)) {
-      // setList([{ id: "12", date }, ...list]);
-      // setSelectedLog({ id: "12", date });
       let log = {
         date,
         userId: user._id,
@@ -30,8 +32,9 @@ function AllLogs({ selectedLog, setSelectedLog }) {
         ],
       });
       if (res) {
-        alert(`New exercise: ${res.data.addNewLog.date} added successfully!!!`);
-        console.log(res.data.addNewLog);
+        alert(
+          `New log on date: ${res.data.addNewLog.date} added successfully!!!`
+        );
         setSelectedLog(res.data.addNewLog);
       }
     } else {

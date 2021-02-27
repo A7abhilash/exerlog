@@ -24,7 +24,7 @@ function WorkoutsForTheDay({ logs, deleteOneLog }) {
                   <td>{item.workout}</td>
                   <td>
                     <p
-                      onClick={() => deleteOneLog(item.id)}
+                      onClick={() => deleteOneLog(index)}
                       className="text-danger cursor-pointer m-0 px-1"
                     >
                       Delete

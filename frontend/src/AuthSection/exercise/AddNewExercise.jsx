@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import React from "react";
+import { useState } from "react";
 import { useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { addNewExerciseMutation, getUserExercises } from "../queries/queries";
@@ -7,23 +8,28 @@ import { addNewExerciseMutation, getUserExercises } from "../queries/queries";
 function AddNewExercise() {
   const { user } = useAuth();
   const newExerciseNameRef = useRef("");
+  const [isLoading, setIsLoading] = useState(false);
   const [addNewExercise] = useMutation(addNewExerciseMutation);
 
-  const newExercise = async (e) => {
-    let exercise = {
-      name: newExerciseNameRef.current.value,
-      userId: user._id,
-    };
-    let res = await addNewExercise({
-      variables: exercise,
-      refetchQueries: [
-        { query: getUserExercises, variables: { id: user._id } },
-      ],
-    });
-    if (res) {
-      alert(
-        `New exercise: ${res.data.addNewExercise.name} added successfully!!!`
-      );
+  const newExercise = async () => {
+    if (newExerciseNameRef.current.value) {
+      setIsLoading(true);
+      let exercise = {
+        name: newExerciseNameRef.current.value,
+        userId: user._id,
+      };
+      let res = await addNewExercise({
+        variables: exercise,
+        refetchQueries: [
+          { query: getUserExercises, variables: { id: user._id } },
+        ],
+      });
+      if (res) {
+        alert(
+          `New exercise: ${res.data.addNewExercise.name} added successfully!!!`
+        );
+        setIsLoading(false);
+      }
     }
   };
 
@@ -37,8 +43,9 @@ function AddNewExercise() {
           placeholder="New Exercise"
         />
         <button
-          onClick={(e) => newExercise(e)}
+          onClick={newExercise}
           className="btn btn-primary btn-sm mx-1"
+          disabled={isLoading}
         >
           Add
         </button>

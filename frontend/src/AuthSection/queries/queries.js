@@ -61,12 +61,24 @@ export const addNewLogMutation = gql`
 `;
 
 export const updateLogMutation = gql`
-  mutation($id: ID!, $logs: [EachLogInput]) {
+  mutation($id: ID!, $logs: [EachLogInput]!) {
     updateLog(input: { id: $id, logs: $logs }) {
-      logs
+      id
+      logs {
+        exercise
+        workout
+      }
     }
   }
 `;
+
+// export const updateLogMutation = gql`
+//   mutation($id: ID!, $logs: [EachLogInput]!) {
+//     updateLog(input: { id: $id, logs: $logs }) {
+//       id
+//     }
+//   }
+// `;
 
 export const deleteLogMutation = gql`
   mutation($id: ID!) {

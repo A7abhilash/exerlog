@@ -49,7 +49,7 @@ const resolvers = {
     return { id: parent.input.id };
   },
   addNewLog: async (parent, args) => {
-    console.log(parent.input);
+    // console.log(parent.input);
     let log = new Logs({
       date: parent.input.date,
       userId: parent.input.userId,
@@ -58,11 +58,9 @@ const resolvers = {
     return await log.save();
   },
   updateLog: async (parent, args) => {
-    let log = {
-      logs: parent.input.logs,
-    };
-    await Logs.findByIdAndUpdate(parent.input.id, log);
-    return log;
+    await Logs.findByIdAndUpdate(parent.input.id, { logs: parent.input.logs });
+    // return { id: parent.input.id };
+    return parent.input;
   },
   deleteLog: async (parent, args) => {
     await Logs.findByIdAndDelete(parent.input.id);
