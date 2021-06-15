@@ -31,10 +31,7 @@ function Exercise() {
         <div className="row align-items-start">
           {data.user.exercises.length ? (
             data.user.exercises.map((exercise) => (
-              <section
-                key={exercise.id}
-                className="col-sm-3 mx-2 mx-md-auto p-2"
-              >
+              <section key={exercise.id} className="col-md-3 mx-2 mx-md-0 p-2">
                 <ExerciseCard
                   exercise={exercise}
                   setEditExercise={setEditExercise}
